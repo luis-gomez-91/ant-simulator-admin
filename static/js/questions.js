@@ -77,31 +77,27 @@ async function renderPageContent() {
     const urlParams = new URLSearchParams(window.location.search);
     currentLicenceId = urlParams.get('id'); // Asigna a la variable global
 
-    const licenceTitleElement = document.getElementById('licenceTitle');
+    const licenceTypeContainer = document.getElementById('licenceTypeContainer');
     const questionsTableBody = document.getElementById('questions-table-body');
     const backIconLink = document.getElementById('iconBack');
 
-    // **VERIFICACIÓN CRÍTICA DE ELEMENTOS DEL DOM:**
-    if (!licenceTitleElement || !questionsTableBody || !backIconLink) {
-        console.error("Error: Uno o más elementos HTML con IDs 'licenceTitle', 'questions-table-body' o 'iconBack' no fueron encontrados.");
-        return; // Salir si no se encuentran los elementos esenciales
-    }
-
-    if (!currentLicenceId) {
-        console.error("No se proporcionó el ID de la licencia en la URL.");
-        licenceTitleElement.textContent = 'Error: ID de licencia no especificado.';
-        questionsTableBody.innerHTML = '<tr><td colspan="4">Por favor, selecciona una licencia válida.</td></tr>';
-        return;
-    }
-
-    // --- Cargar y Mostrar el Título de la Licencia ---
     const licenceData = await getSingleLicenceById(currentLicenceId);
     if (licenceData) {
-        licenceTitleElement.innerHTML = `Licencia tipo ${licenceData.name} (versión ${licenceData.version.year})`;
+        console.log(licenceData)
+        licenceTypeContainer.innerHTML = `
+            <div>
+                <h1>Licencia tipo ${licenceData.name} (versión ${licenceData.version.year})</h1>
+                <a href="${licenceData.question_bank}" class="btn btn-light" target="_blank">
+                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-file-type-pdf"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M5 12v-7a2 2 0 0 1 2 -2h7l5 5v4" /><path d="M5 18h1.5a1.5 1.5 0 0 0 0 -3h-1.5v6" /><path d="M17 18h2" /><path d="M20 15h-3v6" /><path d="M11 15v6h1a2 2 0 0 0 2 -2v-2a2 2 0 0 0 -2 -2h-1z" /></svg>
+                    Banco de preguntas
+                </a>
+            </div>
+            <img src="${licenceData.image}" alt="">
+        `;
     backIconLink.href = `licences.html?id=${licenceData.version.id}`;
 
     } else {
-        licenceTitleElement.innerHTML = `Error: No se pudo cargar la licencia (ID: ${currentLicenceId}).`;
+        licenceTypeContainer.innerHTML = `<h4>Error: No se pudo cargar la licencia (ID: ${currentLicenceId}).</h4>`;
     }
 
     // --- Cargar y Renderizar las Preguntas ---

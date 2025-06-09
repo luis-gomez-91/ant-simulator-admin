@@ -3,7 +3,7 @@
 body {
     margin: 0;
     /* background: linear-gradient(to bottom, #2D1A3E, #0A1913); */
-    background: linear-gradient(to bottom, #4b0082, #0A1913);
+    background: linear-gradient(to bottom, #4b0082, #0A1913 30%);
     color: #ddd;
     font-family: Poppins, sans-serif;
     font-size: 14px;
@@ -21,6 +21,16 @@ body {
     position: absolute;
     left: 5em;
     top: 1em;
+}
+
+#licenceTypeContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    img {
+        height: 100px;
+    }
 }
 
 @media (max-width: 768px) {
