@@ -38,3 +38,17 @@ body {
         left: 1em;
     }
 }
+
+#imgModal .modal-dialog {
+    max-width: fit-content !important; /* Ajusta el ancho al contenido */
+    width: auto !important; /* Asegura que no tenga un ancho fijo */
+    margin: 1.75rem auto; /* Vuelve a centrarlo si es necesario */
+}
+
+/* Opcional: Para controlar el tamaño máximo de la imagen dentro del modal */
+#imgModal #imgContent {
+    max-width: 100%; /* Asegura que la imagen no se desborde del modal */
+    height: auto;
+    display: block; /* Para centrar la imagen si es más pequeña que el modal */
+    margin: auto;
+}

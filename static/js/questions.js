@@ -115,7 +115,7 @@ async function renderPageContent() {
 
         sortedQuestions.forEach(question => {
             const questionImageUrl = question.image ? question.image.startsWith('http') ? question.image : `${SERVER_URL}${question.image}` : '';
-            const imageHtml = questionImageUrl ? `<img src="${questionImageUrl}" alt="Imagen de pregunta" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">` : 'No';
+            const imageHtml = questionImageUrl ? `<a href="#" data-bs-toggle="modal" data-bs-target="#imgModal" onclick="document.getElementById('imgContent').src = '${questionImageUrl}'"><img src="${questionImageUrl}" alt="Imagen de pregunta" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;"></a>` : 'No';
 
             let choicesHtml = `<ul style="list-style-type: none; padding-left: 0; margin-top: 5px; color: #e0e0e0;">`; // Color para texto de opciones
             if (question.choices && question.choices.length > 0) {
