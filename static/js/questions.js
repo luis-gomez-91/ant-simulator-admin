@@ -127,15 +127,25 @@ async function renderPageContent() {
             if (question.choices && question.choices.length > 0) {
                 question.choices.forEach((choice, index) => {
                     const label = letterLabels[index] || String.fromCharCode(97 + index);
-                    // Color para opción correcta
-                    const choiceColor = choice.is_correct ? 'green' : '#555'; // Verde claro para correcta, gris claro para incorrecta
-                    choicesHtml += `<li style="color: ${choiceColor}; font-size: 0.9em; margin-bottom: 2px;">
-                        <strong>${label})</strong> ${choice.text}
+                    
+                    const isCorrect = choice.is_correct;
+                    const choiceColor = isCorrect ? 'green' : '#555';
+                    const backgroundColor = isCorrect ? '#d4edda' : 'transparent'; // verde claro para fondo correcto
+
+                    choicesHtml += `<li style="
+                        color: ${choiceColor}; 
+                        background-color: ${backgroundColor};
+                        font-size: 0.9em; 
+                        margin-bottom: 2px; 
+                        padding: 4px; 
+                        border-radius: 4px;">
+                            <strong>${label})</strong> ${choice.text}
                     </li>`;
                 });
             } else {
                 choicesHtml += `<li>Sin respuestas definidas.</li>`;
             }
+
             choicesHtml += `</ul>`;
 
             tableRowsHtml += `
