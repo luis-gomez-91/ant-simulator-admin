@@ -13,6 +13,7 @@
     <a href="licences.html?id=1" id="iconBack">
         <svg  xmlns="http://www.w3.org/2000/svg"  width="40"  height="40"  viewBox="0 0 24 24"  fill="none"  stroke="#ffffff"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>
     </a>
+
     <div class="container mt-5">
         <div class="row">
             <div class="col" id="licenceTypeContainer">
@@ -41,7 +42,7 @@
                         <h5 class="">RESPUESTAS</h5>
                         <div id="choices-container">
                             </div>
-                        <button type="button" id="addChoiceBtn" class="btn btn-primary btn-sm mt-2">Añadir Respuesta</button>
+                        <button type="button" id="addChoiceBtn" class="btn btn-secondary btn-sm mt-2">Añadir Respuesta</button>
                     </div>
 
                     <div class="mb-3">
@@ -49,7 +50,13 @@
                         <input type="file" id="question_image" name="image" class="form-control" accept="image/*">
                     </div>
                     
-                    <button type="submit" class="btn btn-primary form-control">Crear Pregunta</button>
+                    <div class="text-end w-100">
+                        <button type="submit" class="btn btn-warning">
+                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-send"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 14l11 -11" /><path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5" /></svg>
+                            Crear Pregunta
+                        </button>
+                    </div>
+                    
                 </form>
             </div>
 
@@ -58,10 +65,24 @@
                     <thead>
                         <tr>
                             <!-- <th scope="col" class="text-center">ID</th> -->
-                            <th scope="col" class="text-center">#</th>
+                            <th scope="col" class="text-center">
+                                <button id="sortToggle" class="btn btn-link p-0" title="Ordenar preguntas">
+                                    <svg id="sortIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-sort-ascending">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                        <path d="M4 6l7 0" />
+                                        <path d="M4 12l7 0" />
+                                        <path d="M4 18l9 0" />
+                                        <path d="M15 9l3 -3l3 3" />
+                                        <path d="M18 6l0 12" />
+                                    </svg>
+                                </button>
+                            </th>
                             <th scope="col">Pregunta</th>
                             <!-- <th scope="col" class="text-center">Licencia</th> -->
-                            <th scope="col" class="text-center">Tipo de Pregunta</th>
+                            <th scope="col" class="text-center">Tipo</th>
                             <th scope="col" class="text-center">Imagen</th>
                         </tr>
                     </thead>

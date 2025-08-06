@@ -87,7 +87,7 @@ async function renderPageContent() {
         licenceTypeContainer.innerHTML = `
             <div>
                 <h1>Licencia tipo ${licenceData.name} (versión ${licenceData.version.year})</h1>
-                <a href="${licenceData.question_bank}" class="btn btn-light" target="_blank">
+                <a href="${licenceData.question_bank}" class="btn btn-outline-light" target="_blank">
                     <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-file-type-pdf"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M5 12v-7a2 2 0 0 1 2 -2h7l5 5v4" /><path d="M5 18h1.5a1.5 1.5 0 0 0 0 -3h-1.5v6" /><path d="M17 18h2" /><path d="M20 15h-3v6" /><path d="M11 15v6h1a2 2 0 0 0 2 -2v-2a2 2 0 0 0 -2 -2h-1z" /></svg>
                     Banco de preguntas
                 </a>
@@ -105,8 +105,14 @@ async function renderPageContent() {
     questionsTableBody.innerHTML = ''; // Limpiar la tabla antes de rellenar
 
     if (questions && questions.length > 0) {
-        // Ordenar las preguntas por el número 'num' si lo tienes
-        const sortedQuestions = questions.sort((a, b) => (a.num || 0) - (b.num || 0));
+        // const sortedQuestions = questions.sort((a, b) => (a.num || 0) - (b.num || 0));
+        const order = localStorage.getItem('questionOrder') || 'asc';
+        const sortedQuestions = questions.sort((a, b) => {
+            const numA = a.num || 0;
+            const numB = b.num || 0;
+            return order === 'asc' ? numA - numB : numB - numA;
+        });
+        
         // Si no usas un 'num' desde el backend, puedes usar el índice:
         // const sortedQuestions = questions; 
 
@@ -151,7 +157,47 @@ async function renderPageContent() {
 
     // --- Actualizar el enlace de regreso ---
     const versionId = urlParams.get('versionId') || '';
+    updateSortIcon(localStorage.getItem('questionOrder') || 'asc');
 }
+
+document.getElementById('sortToggle').addEventListener('click', () => {
+    const current = localStorage.getItem('questionOrder') || 'asc';
+    const next = current === 'asc' ? 'desc' : 'asc';
+    localStorage.setItem('questionOrder', next);
+    updateSortIcon(next);
+    renderPageContent(); // recarga el contenido con el nuevo orden
+});
+
+function updateSortIcon(order) {
+    const sortIcon = document.getElementById('sortIcon');
+    if (!sortIcon) return;
+
+    // Limpiar contenido actual del icono
+    sortIcon.innerHTML = '';
+
+    if (order === 'asc') {
+        sortIcon.className = "icon icon-tabler icons-tabler-outline icon-tabler-sort-ascending";
+        sortIcon.innerHTML = `
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <path d="M4 6l7 0" />
+            <path d="M4 12l7 0" />
+            <path d="M4 18l9 0" />
+            <path d="M15 9l3 -3l3 3" />
+            <path d="M18 6l0 12" />
+        `;
+    } else {
+        sortIcon.className = "icon icon-tabler icons-tabler-outline icon-tabler-sort-descending";
+        sortIcon.innerHTML = `
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <path d="M4 6l9 0" />
+            <path d="M4 12l7 0" />
+            <path d="M4 18l7 0" />
+            <path d="M15 15l3 3l3 -3" />
+            <path d="M18 6l0 12" />
+        `;
+    }
+}
+
 
 // Inicializa la página al cargar el DOM
 document.addEventListener('DOMContentLoaded', renderPageContent);
